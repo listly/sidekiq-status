@@ -19,7 +19,7 @@ module Sidekiq::Status
         queue = Sidekiq::Workers.new
         @statuses = []
 
-        queue.each do |process, name, work, started_at|
+        queue.each do |process, work, started_at|
           job = Struct.new(:jid, :klass, :args).new(work["payload"]["jid"], work["payload"]["class"], work["payload"]["args"])
           status = Sidekiq::Status::get_all job.jid
           next if !status || status.count < 2
